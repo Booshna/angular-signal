@@ -36,10 +36,23 @@
 
 .btn-primary,
 .btn-info,
-.btn-danger {
+.btn-danger,
+.btn-secondary {
   border-radius: 20px;
+}
+
+.btn-info,
+.btn-danger,
+.btn-secondary {
+  width: 73px;
 }
 
 h3 {
   font-weight: bold;
+}
+
+.close {
+  color: red;
+  margin-top: -1rem;
+  cursor: pointer;
 }

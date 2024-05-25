@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { CrudService } from '../services/crud.service';
 import { FormComponent } from '../form/form.component';
@@ -9,13 +10,18 @@ import { User } from '../user';
 @Component({
   selector: 'app-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MatIconModule],
   templateUrl: './list.component.html',
   styleUrl: './list.component.css'
 })
 export class ListComponent {
 
+  //del confirmation modal
+  @ViewChild('confirmationModal') confirmationModal: any;
+
   list: User[] = [];
+  userIdToDelete: number | undefined;
+  displayStyle: string = 'none';
 
   constructor(private crudService: CrudService, public dialog: MatDialog) { }
 
@@ -35,9 +41,25 @@ export class ListComponent {
     });
   }
 
+  confirmDeleteUser(userId: number): void {
+    this.userIdToDelete = userId;
+    this.openModal();
+  }
+
+  openModal(): void {
+    this.displayStyle = 'block'
+  }
+
+  closeModal(): void {
+    this.displayStyle = 'none'
+  }
+
   //del user by id
-  deleteUser(id: number) {
-    this.crudService.deleteUser(id);
+  deleteUser() {
+    if (this.userIdToDelete != null) {
+      this.crudService.deleteUser(this.userIdToDelete);
+      this.closeModal();
+    }
     this.list = this.crudService.getUsers();
   }
 
