@@ -1,0 +1,136 @@
+<div class="container p-2 w-75">
+  <div class="modal-header mt-2 mb-2">
+    <h3 class="card-title">{{ data ? "Edit User" : "Add User" }}</h3>
+
+    <mat-icon
+      class="close"
+      data-dismiss="modal"
+      aria-label="Close"
+      (click)="closeModal()"
+      >cancel</mat-icon
+    >
+  </div>
+  <div class="modal-body">
+    <form #userForm="ngForm">
+      <div class="mb-3">
+        <label for="firstName" class="form-label"
+          >First Name <span class="error-icon">*</span></label
+        >
+        <input
+          type="text"
+          class="form-control mb-1"
+          id="firstName"
+          #firstName="ngModel"
+          [(ngModel)]="user.firstName"
+          name="firstName"
+          required
+        />
+        <span
+          class="text-danger"
+          *ngIf="firstName.errors?.['required'] && firstName.touched"
+          >First Name is required</span
+        >
+      </div>
+      <div class="mb-3">
+        <label for="lastName" class="form-label"
+          >Last Name <span class="error-icon">*</span></label
+        >
+        <input
+          type="text"
+          class="form-control mb-1"
+          id="lastName"
+          #lastName="ngModel"
+          [(ngModel)]="user.lastName"
+          name="lastName"
+          required
+        />
+        <span
+          class="text-danger"
+          *ngIf="lastName.errors?.['required'] && lastName.touched"
+          >Last Name is required</span
+        >
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label"
+          >Email <span class="error-icon">*</span></label
+        >
+        <input
+          type="email"
+          class="form-control mb-1"
+          id="email"
+          #email="ngModel"
+          [(ngModel)]="user.email"
+          name="email"
+          required
+          email
+        />
+        <span
+          class="text-danger"
+          *ngIf="email.errors?.['required'] && email.touched"
+          >Email is required</span
+        >
+        <span
+          class="text-danger"
+          *ngIf="email.errors?.['email']  && email.touched"
+          >Email is invalid</span
+        >
+      </div>
+      <div class="mb-3">
+        <label for="mobile" class="form-label"
+          >Mobile <span class="error-icon">*</span></label
+        >
+        <input
+          type="text"
+          class="form-control mb-1"
+          id="mobile"
+          #mobile="ngModel"
+          [(ngModel)]="user.mobile"
+          name="mobile"
+          required
+          pattern="^[0-9]{10}$"
+        />
+        <div
+          *ngIf="mobile.invalid && (mobile.dirty || mobile.touched)"
+          class="text-danger"
+        >
+          <span *ngIf="mobile.errors?.['required']"
+            >Mobile number is required</span
+          >
+          <span *ngIf="mobile.errors?.['pattern']"
+            >Mobile number must be 10 digits</span
+          >
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="profilePicture" class="form-label">Profile Picture </label>
+        <input
+          type="file"
+          class="form-control mb-1"
+          id="profilePicture"
+          (change)="onFileChange($event)"
+        />
+        <img
+          *ngIf="user.profilePicture"
+          [src]="user.profilePicture"
+          alt="Profile Picture"
+          class="img-thumbnail mt-2"
+          width="50"
+          height="50"
+        />
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer m-2">
+    <button type="button" class="btn btn-secondary me-2" (click)="closeModal()">
+      Cancel
+    </button>
+    <button
+      type="button"
+      [disabled]="userForm.invalid"
+      class="btn btn-primary"
+      (click)="save()"
+    >
+      {{ data ? "Update" : "Save" }}
+    </button>
+  </div>
+</div>

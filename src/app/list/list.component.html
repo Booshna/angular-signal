@@ -1,0 +1,51 @@
+<div class="container mt-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3">User List</h1>
+    <button class="btn btn-primary" (click)="openDialog()">Add User</button>
+  </div>
+  <ul class="list-group">
+    <li
+      *ngFor="let item of list"
+      class="list-group-item d-flex justify-content-between align-items-center p-3"
+    >
+      <div class="d-flex align-items-center">
+        <img
+          [src]="item.profilePicture"
+          class="rounded-circle mr-3"
+          width="50"
+          height="50"
+          alt="Profile Picture"
+        />
+        <div class="user-details">
+          <div>
+            <strong>{{ item.firstName }} {{ item.lastName }}</strong>
+          </div>
+          <div class="text-muted">{{ item.email }}</div>
+          <div class="text-muted">{{ item.mobile }}</div>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button class="btn btn-info btn-sm me-2" (click)="openDialog(item)">
+          Edit
+        </button>
+        <button class="btn btn-danger btn-sm" (click)="deleteUser(item.id)">
+          Delete
+        </button>
+      </div>
+    </li>
+    <div *ngIf="list.length === 0">
+      <ul class="list-group">
+        <li
+          class="list-group-item d-flex justify-content-center align-items-center p-3"
+        >
+          <div
+            class="d-flex align-items-center w-100 justify-content-center text-center"
+          >
+            No Records Found
+          </div>
+        </li>
+      </ul>
+    </div>
+  </ul>
+</div>

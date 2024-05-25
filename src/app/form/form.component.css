@@ -1,0 +1,10 @@
+.error-icon {
+  color: #ff0000;
+  margin-left: 0;
+}
+
+.close {
+  color: red;
+  margin-top: -1rem;
+  cursor: pointer;
+}
